@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NovaCart is a modern e-commerce product catalog with smart search, category filtering, product browsing and shopping cart features."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="theme-color"
+        content="#2563eb"
+    >
+
+    <title>NovaCart | Smart E-Commerce Store</title>
+
+    <style>
+
+        /* =========================
+           GLOBAL
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f5f7fb;
+            color: #172033;
+            line-height: 1.5;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #dfe3ea;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            height: 72px;
+
+            margin: auto;
+            padding: 0 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+
+        /* NAVIGATION */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: #1d4ed8;
+        }
+
+
+        /* CART BUTTON */
+
+        .cart-btn {
+            border: none;
+
+            background: #1d4ed8;
+            color: #ffffff;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .cart-btn:hover {
+            background: #1e40af;
+        }
+
+        .cart-btn:focus {
+            outline: 3px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
+
+        /* =========================
+           PAGE SYSTEM
+        ========================= */
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            max-width: 1200px;
+
+            margin: 35px auto;
+            padding: 55px 45px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4ed8,
+                    #6d28d9
+                );
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .hero-text {
+            max-width: 650px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.1;
+
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+
+            color: #ffffff;
+        }
+
+        .hero-button {
+            margin-top: 25px;
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+            color: #1d4ed8;
+
+            font-weight: 800;
+
+            transition: 0.2s;
+        }
+
+        .hero-button:hover {
+            background: #e5e7eb;
+        }
+
+        .hero-button:focus {
+            outline: 3px solid #bfdbfe;
+            outline-offset: 3px;
+        }
+
+        .hero-icon {
+            font-size: 120px;
+            line-height: 1;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 20px;
+        }
+
+        .section-title {
+            margin: 25px 0;
+
+            font-size: 28px;
+
+            color: #111827;
+        }
+
+
+        /* =========================
+           SEARCH & FILTER
+        ========================= */
+
+        .controls {
+            display: flex;
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 6px;
+
+            flex: 1;
+
+            min-width: 230px;
+        }
+
+        .control-group label {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #111827;
+        }
+
+        .search {
+            width: 100%;
+
+            padding: 13px 16px;
+
+            border: 2px solid #d1d5db;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            outline: none;
+
+            font-size: 15px;
+        }
+
+        .search::placeholder {
+            color: #4b5563;
+        }
+
+        .search:focus {
+            border-color: #1d4ed8;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.15);
+        }
+
+        select {
+            width: 100%;
+
+            padding: 13px 16px;
+
+            border: 2px solid #d1d5db;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            cursor: pointer;
+
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #1d4ed8;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.15);
+        }
+
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
+        .products {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+
+            border-radius: 17px;
+
+            padding: 16px;
+
+            border: 1px solid #dfe3ea;
+
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.10);
+        }
+
+        .product-image {
+            height: 180px;
+
+            border-radius: 13px;
+
+            background: #e0e7ff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 80px;
+
+            margin-bottom: 15px;
+        }
+
+        .category {
+            display: inline-block;
+
+            font-size: 12px;
+
+            color: #1d4ed8;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .card h3 {
+            margin: 7px 0;
+
+            color: #111827;
+
+            font-size: 19px;
+        }
+
+        .rating {
+            color: #92400e;
+
+            font-weight: 700;
+
+            margin: 6px 0;
+        }
+
+        .price {
+            color: #111827;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            margin: 10px 0;
+        }
+
+        .add-btn {
+            width: 100%;
+
+            border: none;
+
+            padding: 11px;
+
+            border-radius: 9px;
+
+            background: #111827;
+
+            color: #ffffff;
+
+            font-weight: 800;
+
+            transition: 0.2s;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .add-btn:focus {
+            outline: 3px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
+
+        /* =========================
+           EMPTY RESULTS
+        ========================= */
+
+        .empty-result {
+            grid-column: 1 / -1;
+
+            background: #ffffff;
+
+            border: 1px solid #dfe3ea;
+
+            border-radius: 15px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #374151;
+        }
+
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        .details {
+            max-width: 800px;
+
+            margin: 50px auto;
+
+            background: #ffffff;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            border: 1px solid #dfe3ea;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.06);
+        }
+
+        .details h1 {
+            color: #111827;
+
+            margin-bottom: 15px;
+        }
+
+        .details p {
+            color: #374151;
+
+            line-height: 1.8;
+
+            margin-bottom: 15px;
+        }
+
+        .back {
+            border: none;
+
+            background: #dbeafe;
+
+            color: #1e40af;
+
+            padding: 10px 16px;
+
+            border-radius: 8px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+        }
+
+        .back:hover {
+            background: #bfdbfe;
+        }
+
+
+        /* =========================
+           CART PANEL
+        ========================= */
+
+        .cart-panel {
+            position: fixed;
+
+            right: -420px;
+            top: 0;
+
+            width: 400px;
+            max-width: 100%;
+
+            height: 100vh;
+
+            background: #ffffff;
+
+            z-index: 2000;
+
+            box-shadow:
+                -8px 0 30px
+                rgba(0, 0, 0, 0.18);
+
+            padding: 25px;
+
+            transition: right 0.3s;
+
+            overflow-y: auto;
+        }
+
+        .cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .cart-header h2 {
+            color: #111827;
+        }
+
+        .close {
+            border: none;
+
+            background: #e5e7eb;
+
+            color: #111827;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            font-weight: 800;
+        }
+
+        .close:hover {
+            background: #d1d5db;
+        }
+
+        .close:focus {
+            outline: 3px solid #93c5fd;
+        }
+
+        .cart-item {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .cart-item strong {
+            color: #111827;
+        }
+
+        .cart-price {
+            color: #374151;
+
+            font-weight: 600;
+        }
+
+        .remove {
+            border: none;
+
+            background: transparent;
+
+            color: #b91c1c;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .remove:hover {
+            text-decoration: underline;
+        }
+
+        .empty-cart {
+            color: #374151;
+
+            text-align: center;
+
+            padding: 30px 0;
+        }
+
+        .total {
+            margin-top: 25px;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+            color: #111827;
+
+            display: flex;
+
+            justify-content: space-between;
+        }
+
+        .checkout {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border: none;
+
+            background: #1d4ed8;
+
+            color: #ffffff;
+
+            border-radius: 10px;
+
+            font-weight: 800;
+        }
+
+        .checkout:hover {
+            background: #1e40af;
+        }
+
+        .checkout:focus {
+            outline: 3px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            margin-top: 70px;
+
+            padding: 40px 20px;
+
+            background: #111827;
+
+            color: #ffffff;
+
+            text-align: center;
+        }
+
+        footer h3 {
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            color: #d1d5db;
+
+            margin-top: 8px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .products {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .products {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-icon {
+                font-size: 80px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                height: auto;
+
+                min-height: 70px;
+
+                padding: 12px 15px;
+
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                order: 3;
+
+                width: 100%;
+
+                justify-content: center;
+
+                gap: 18px;
+            }
+
+            .hero {
+                margin: 20px;
+
+                padding: 35px 25px;
+
+                border-radius: 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-panel {
+                width: 100%;
+            }
+
+            .details {
+                margin: 25px 20px;
+
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <nav
+        class="navbar"
+        aria-label="Main navigation"
+    >
+
+        <a
+            href="#home"
+            class="logo"
+            onclick="goHome()"
+            aria-label="NovaCart Home"
+        >
+            Nova<span>Cart</span>
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a
+                    href="#home"
+                    onclick="goHome()"
+                >
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="#products"
+                    onclick="showProducts()"
+                >
+                    Products
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="#about"
+                    onclick="showAbout()"
+                >
+                    About
+                </a>
+            </li>
+
+        </ul>
+
+
+        <button
+            type="button"
+            class="cart-btn"
+            onclick="toggleCart()"
+            aria-label="Open shopping cart"
+        >
+
+            🛒 Cart
+
+            <span id="cartCount">
+                0
+            </span>
+
+        </button>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     HOME PAGE
+========================= -->
+
+<main
+    id="homePage"
+    class="page active"
+>
+
+
+    <!-- HERO -->
+
+    <section
+        class="hero"
+        aria-labelledby="hero-title"
+    >
+
+        <div class="hero-text">
+
+            <h1 id="hero-title">
+                Everything You Need.
+                One Smart Store.
+            </h1>
+
+            <p>
+                Discover quality products with a simple,
+                fast and responsive shopping experience
+                designed for modern users.
+            </p>
+
+            <button
+                type="button"
+                class="hero-button"
+                onclick="showProducts()"
+            >
+                Explore Products →
+            </button>
+
+        </div>
+
+
+        <div
+            class="hero-icon"
+            aria-hidden="true"
+        >
+            🛍️
+        </div>
+
+    </section>
+
+
+
+    <!-- PRODUCTS -->
+
+    <section
+        class="container"
+        id="productsSection"
+        aria-labelledby="products-title"
+    >
+
+        <h2
+            id="products-title"
+            class="section-title"
+        >
+            Featured Products
+        </h2>
+
+
+        <!-- SEARCH -->
+
+        <div class="controls">
+
+
+            <div class="control-group">
+
+                <label for="search">
+                    Search products
+                </label>
+
+                <input
+                    type="search"
+                    id="search"
+                    class="search"
+                    placeholder="Search products..."
+                    aria-label="Search products"
+                    autocomplete="off"
+                    oninput="displayProducts()"
+                >
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="control-group">
+
+                <label for="category">
+                    Product category
+                </label>
+
+                <select
+                    id="category"
+                    onchange="displayProducts()"
+                    aria-label="Filter products by category"
+                >
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                    <option value="electronics">
+                        Electronics
+                    </option>
+
+                    <option value="fashion">
+                        Fashion
+                    </option>
+
+                    <option value="accessories">
+                        Accessories
+                    </option>
+
+                    <option value="home">
+                        Home
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT CARDS -->
+
+        <div
+            id="products"
+            class="products"
+            aria-live="polite"
+        ></div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =========================
+     ABOUT PAGE
+========================= -->
+
+<section
+    id="aboutPage"
+    class="page"
+>
+
+    <div class="details">
+
+        <button
+            type="button"
+            class="back"
+            onclick="goHome()"
+        >
+            ← Back to Home
+        </button>
+
+        <h1>
+            About NovaCart
+        </h1>
+
+        <p>
+            NovaCart is a modern e-commerce product
+            catalog created using responsive web
+            technologies.
+        </p>
+
+        <p>
+            The application demonstrates client-side
+            navigation, dynamic product rendering,
+            search, category filtering and shopping
+            cart management.
+        </p>
+
+        <p>
+            Cart information is stored locally in the
+            browser so users can continue their shopping
+            experience without losing their selected
+            products.
+        </p>
+
+        <p>
+            The architecture can be extended with
+            Node.js, Express and MongoDB for a complete
+            full-stack production application.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     CART
+========================= -->
+
+<aside
+    id="cartPanel"
+    class="cart-panel"
+    aria-label="Shopping cart"
+    aria-hidden="true"
+>
+
+    <div class="cart-header">
+
+        <h2>
+            Your Cart
+        </h2>
+
+        <button
+            type="button"
+            class="close"
+            onclick="toggleCart()"
+            aria-label="Close shopping cart"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartItems"
+        aria-live="polite"
+    ></div>
+
+
+    <div class="total">
+
+        <span>
+            Total
+        </span>
+
+        <span>
+            ₹<span id="total">0</span>
+        </span>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="checkout"
+        onclick="checkout()"
+    >
+        Proceed to Checkout
+    </button>
+
+</aside>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h3>
+        NovaCart
+    </h3>
+
+    <p>
+        Smart shopping experience for modern users.
+    </p>
+
+    <p>
+        © 2026 NovaCart. All rights reserved.
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================================
+   PRODUCT DATA
+========================================= */
+
+const products = [
+
+    {
+        id: 1,
+        name: "Nova Headphones",
+        category: "electronics",
+        price: 2499,
+        rating: 4.8,
+        icon: "🎧"
+    },
+
+    {
+        id: 2,
+        name: "Smart Watch Pro",
+        category: "electronics",
+        price: 3999,
+        rating: 4.7,
+        icon: "⌚"
+    },
+
+    {
+        id: 3,
+        name: "Urban Sneakers",
+        category: "fashion",
+        price: 2199,
+        rating: 4.6,
+        icon: "👟"
+    },
+
+    {
+        id: 4,
+        name: "Classic Hoodie",
+        category: "fashion",
+        price: 1599,
+        rating: 4.5,
+        icon: "🧥"
+    },
+
+    {
+        id: 5,
+        name: "Travel Backpack",
+        category: "accessories",
+        price: 1899,
+        rating: 4.8,
+        icon: "🎒"
+    },
+
+    {
+        id: 6,
+        name: "Premium Sunglasses",
+        category: "accessories",
+        price: 1299,
+        rating: 4.4,
+        icon: "🕶️"
+    },
+
+    {
+        id: 7,
+        name: "Desk Lamp",
+        category: "home",
+        price: 999,
+        rating: 4.5,
+        icon: "💡"
+    },
+
+    {
+        id: 8,
+        name: "Coffee Maker",
+        category: "home",
+        price: 2899,
+        rating: 4.7,
+        icon: "☕"
+    }
+
+];
+
+
+
+/* =========================================
+   CART DATA
+========================================= */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("novacart-cart")
+    ) || [];
+
+
+
+/* =========================================
+   DISPLAY PRODUCTS
+========================================= */
+
+function displayProducts() {
+
+    const container =
+        document.getElementById("products");
+
+    const searchElement =
+        document.getElementById("search");
+
+    const categoryElement =
+        document.getElementById("category");
+
+
+    const searchValue =
+        searchElement.value
+            .trim()
+            .toLowerCase();
+
+
+    const selectedCategory =
+        categoryElement.value;
+
+
+    const filteredProducts =
+        products.filter(product => {
+
+            const matchesSearch =
+                product.name
+                    .toLowerCase()
+                    .includes(searchValue);
+
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                product.category === selectedCategory;
+
+
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
+
+        });
+
+
+    container.innerHTML = "";
+
+
+    /* NO RESULTS */
+
+    if (filteredProducts.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-result">
+
+                <h3>
+                    No products found
+                </h3>
+
+                <p>
+                    Try another search term or category.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* PRODUCT CARDS */
+
+    filteredProducts.forEach(product => {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "card";
+
+
+        card.innerHTML = `
+
+            <div
+                class="product-image"
+                role="img"
+                aria-label="${product.name}"
+            >
+                ${product.icon}
+            </div>
+
+            <span class="category">
+                ${product.category}
+            </span>
+
+            <h3>
+                ${product.name}
+            </h3>
+
+            <div
+                class="rating"
+                aria-label="Rating ${product.rating} out of 5"
+            >
+                ⭐ ${product.rating}
+            </div>
+
+            <div class="price">
+                ₹${product.price.toLocaleString("en-IN")}
+            </div>
+
+            <button
+                type="button"
+                class="add-btn"
+                onclick="addToCart(${product.id})"
+                aria-label="Add ${product.name} to cart"
+            >
+                Add to Cart
+            </button>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function addToCart(id) {
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+
+    if (!product) {
+        return;
+    }
+
+
+    cart.push(product);
+
+
+    saveCart();
+
+    updateCart();
+
+
+    alert(
+        product.name +
+        " has been added to your cart!"
+    );
+
+}
+
+
+
+/* =========================================
+   SAVE CART
+========================================= */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "novacart-cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+
+/* =========================================
+   UPDATE CART
+========================================= */
+
+function updateCart() {
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+    const totalElement =
+        document.getElementById("total");
+
+
+    cartCount.textContent =
+        cart.length;
+
+
+    cartItems.innerHTML = "";
+
+
+    /* EMPTY CART */
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+                Your cart is empty.
+            </div>
+
+        `;
+
+        totalElement.textContent = "0";
+
+        return;
+    }
+
+
+    let total = 0;
+
+
+    /* CART ITEMS */
+
+    cart.forEach(
+        (item, index) => {
+
+            total += item.price;
+
+
+            const cartItem =
+                document.createElement("div");
+
+            cartItem.className =
+                "cart-item";
+
+
+            cartItem.innerHTML = `
+
+                <div>
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+                    <br>
+
+                    <span class="cart-price">
+                        ₹${item.price.toLocaleString("en-IN")}
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="remove"
+                    onclick="removeItem(${index})"
+                    aria-label="Remove ${item.name} from cart"
+                >
+                    Remove
+                </button>
+
+            `;
+
+
+            cartItems.appendChild(cartItem);
+
+        }
+    );
+
+
+    totalElement.textContent =
+        total.toLocaleString("en-IN");
+
+}
+
+
+
+/* =========================================
+   REMOVE ITEM
+========================================= */
+
+function removeItem(index) {
+
+    if (
+        index < 0 ||
+        index >= cart.length
+    ) {
+        return;
+    }
+
+
+    cart.splice(index, 1);
+
+
+    saveCart();
+
+    updateCart();
+
+}
+
+
+
+/* =========================================
+   CART PANEL
+========================================= */
+
+function toggleCart() {
+
+    const panel =
+        document.getElementById("cartPanel");
+
+
+    const isOpen =
+        panel.classList.toggle("open");
+
+
+    panel.setAttribute(
+        "aria-hidden",
+        String(!isOpen)
+    );
+
+}
+
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome() {
+
+    const homePage =
+        document.getElementById("homePage");
+
+    const aboutPage =
+        document.getElementById("aboutPage");
+
+
+    homePage.classList.add("active");
+
+    aboutPage.classList.remove("active");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =========================================
+   PRODUCTS
+========================================= */
+
+function showProducts() {
+
+    goHome();
+
+
+    setTimeout(() => {
+
+        const section =
+            document.getElementById(
+                "productsSection"
+            );
+
+
+        section.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }, 100);
+
+}
+
+
+
+/* =========================================
+   ABOUT
+========================================= */
+
+function showAbout() {
+
+    const homePage =
+        document.getElementById("homePage");
+
+    const aboutPage =
+        document.getElementById("aboutPage");
+
+
+    homePage.classList.remove("active");
+
+    aboutPage.classList.add("active");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =========================================
+   CHECKOUT
+========================================= */
+
+function checkout() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty. Add a product first."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Order placed successfully! " +
+        "Thank you for shopping with NovaCart."
+    );
+
+
+    cart = [];
+
+
+    saveCart();
+
+    updateCart();
+
+    toggleCart();
+
+}
+
+
+
+/* =========================================
+   KEYBOARD ACCESSIBILITY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            const panel =
+                document.getElementById(
+                    "cartPanel"
+                );
+
+
+            if (
+                panel.classList.contains("open")
+            ) {
+
+                toggleCart();
+
+            }
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   INITIAL APPLICATION LOAD
+========================================= */
+
+displayProducts();
+
+updateCart();
+
+</script>
+
+
+</body>
+
+</html>
